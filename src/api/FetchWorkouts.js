@@ -1,62 +1,54 @@
 import axios from 'axios';
 
-const getAllWorkouts = (setWorkout) => {
-	const token = localStorage.getItem('token');
-	axios.get('http://localhost:8000/workouts', { headers: { Authorization: `Bearer ${token}` } }).then(({ data }) => {
-		console.log(data);
-		setWorkout(data);
-	});
+const getAllWorkouts = async () => {
+	try {
+		const token = localStorage.getItem('token');
+		const response = await axios.get('http://localhost:8000/workouts', {
+			headers: { Authorization: `Bearer ${token}` },
+		});
+		return response.data;
+	} catch (error) {
+		throw new Error('Error fetching workouts');
+	}
 };
 
-const addWorkout = (type, date, duration, setType, setDate, setDuration, setWorkout) => {
-	const token = localStorage.getItem('token');
-	axios
-		.post(
+const addWorkout = async (type, date, duration) => {
+	try {
+		const token = localStorage.getItem('token');
+		await axios.post(
 			'http://localhost:8000/workouts/saveWorkout',
 			{ type, date, duration },
 			{ headers: { Authorization: `Bearer ${token}` } }
-		)
-		.then((data) => {
-			console.log(data);
-			setType('');
-			setDate('');
-			setDuration('');
-			getAllWorkouts(setWorkout);
-		});
+		);
+	} catch (error) {
+		throw new Error('Error adding workout');
+	}
 };
 
-const editWorkout = (workoutId, type, date, duration, setWorkout, setType, setDate, setDuration, setEditing) => {
-	const token = localStorage.getItem('token');
-	axios
-		.post(
+const editWorkout = async (workoutId, type, date, duration, setWorkout) => {
+	try {
+		const token = localStorage.getItem('token');
+		await axios.post(
 			'http://localhost:8000/workouts/editWorkout',
 			{ type, date, duration, _id: workoutId },
 			{ headers: { Authorization: `Bearer ${token}` } }
-		)
-		.then((data) => {
-			console.log(data);
-			setType('');
-			setDate('');
-			setDuration('');
-			setEditing(false);
-			getAllWorkouts(setWorkout);
-		});
+		);
+		getAllWorkouts(setWorkout);
+	} catch (error) {
+		throw new Error('Error editing workout');
+	}
 };
 
-const deleteWorkout = (_id, setWorkout) => {
-	const token = localStorage.getItem('token');
-	axios
-		.delete('http://localhost:8000/workouts/deleteWorkout', {
+const deleteWorkout = async (workoutId) => {
+	try {
+		const token = localStorage.getItem('token');
+		await axios.delete('http://localhost:8000/workouts/deleteWorkout', {
 			headers: { Authorization: `Bearer ${token}` },
-			data: { _id },
-		})
-		.then((data) => {
-			console.log(data);
-			getAllWorkouts(setWorkout);
-		})
-		.catch((error) => {
-			console.error('Error deleting workout:', error);
+			data: { _id: workoutId },
 		});
+	} catch (error) {
+		throw new Error('Error deleting workout');
+	}
 };
 
 export { getAllWorkouts, addWorkout, editWorkout, deleteWorkout };

@@ -2,33 +2,39 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-function Registration() {
+function Auth() {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
+	const [isRegistration, setIsRegistration] = useState(false);
 	const [isRegistrationSuccessful, setIsRegistrationSuccessful] = useState(false);
 	const navigate = useNavigate();
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
-			const response = await axios.post('http://localhost:8000/auth/register', {
+			const endpoint = isRegistration ? '/auth/register' : '/auth/login';
+			const response = await axios.post(`http://localhost:8000${endpoint}`, {
 				email,
 				password,
 			});
 
 			console.log(response.data);
 
-			setIsRegistrationSuccessful(true);
-
-			navigate('/login');
+			if (!isRegistration) {
+				localStorage.setItem('token', response.data.token);
+				navigate('/workouts');
+			} else {
+				setIsRegistrationSuccessful(true);
+				setIsRegistration(false);
+			}
 		} catch (error) {
-			console.error('Error during registration:', error);
+			console.error('Error during authentication:', error);
 		}
 	};
 
 	return (
 		<div>
-			<h1>Registration</h1>
+			<h1>{isRegistration ? 'Registration' : 'Login'}</h1>
 			<form onSubmit={handleSubmit}>
 				<input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
 				<input
@@ -37,14 +43,22 @@ function Registration() {
 					value={password}
 					onChange={(e) => setPassword(e.target.value)}
 				/>
-				<button type="submit">Register</button>
+				<button type="submit">{isRegistration ? 'Register' : 'Login'}</button>
 			</form>
 			<p>
-				Already have an account? <Link to="/login">Login</Link>
+				{isRegistration ? (
+					<>
+						Already have an account? <Link onClick={() => setIsRegistration(false)}>Login</Link>
+					</>
+				) : (
+					<>
+						Don't have an account? <Link onClick={() => setIsRegistration(true)}>Register</Link>
+					</>
+				)}
 			</p>
 			{isRegistrationSuccessful && <p>Registration successful!</p>}
 		</div>
 	);
 }
 
-export default Registration;
+export default Auth;
