@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { TextField, Button, Typography, Grid } from '@mui/material';
 import { getAllWorkouts, addWorkout, editWorkout, deleteWorkout } from '../api/FetchWorkouts';
 import { MyWorkouts } from './MyWorkouts';
 
@@ -74,32 +75,75 @@ function Workouts() {
 
 	return (
 		<div>
-			<h1>Workout plan</h1>
-			<input
-				type="text"
-				placeholder="Add a workout type"
-				value={type || ''}
-				onChange={(e) => setType(e.target.value)}
-			/>
-			<input type="date" value={date || ''} onChange={(e) => setDate(e.target.value)} />
-			<input
-				type="number"
-				placeholder="Duration in minutes"
-				value={duration || ''}
-				onChange={(e) => setDuration(e.target.value)}
-			/>
-			<button onClick={editing ? handleEditWorkout : handleAddWorkout}>{editing ? 'Edit' : 'Add'}</button>
-			{myWorkout.map((workout) => (
-				<MyWorkouts
-					type={workout.type}
-					date={workout.date}
-					duration={workout.duration}
-					key={workout._id}
-					updatingInInput={() => updatingInInput(workout._id, workout.type, workout.date, workout.duration)}
-					deleteWorkout={() => handleDeleteWorkout(workout._id)}
-				/>
-			))}
-			<button onClick={handleLogout}>Выйти</button>
+			<Typography variant="h1" sx={{ textAlign: 'center' }}>
+				Workout plan
+			</Typography>
+			<Grid container spacing={2} alignItems="center" justifyContent="center" sx={{ marginTop: '16px' }}>
+				<Grid item xs={12} sm={4}>
+					<TextField
+						type="text"
+						label="Add a workout type"
+						value={type || ''}
+						onChange={(e) => setType(e.target.value)}
+						variant="outlined"
+						fullWidth
+						sx={{ height: '100%' }}
+					/>
+				</Grid>
+				<Grid item xs={12} sm={4}>
+					<TextField
+						type="date"
+						label="Date"
+						value={date || ''}
+						onChange={(e) => setDate(e.target.value)}
+						variant="outlined"
+						fullWidth
+					/>
+				</Grid>
+				<Grid item xs={12} sm={4}>
+					<TextField
+						type="number"
+						label="Duration in minutes"
+						value={duration || ''}
+						onChange={(e) => setDuration(e.target.value)}
+						variant="outlined"
+						fullWidth
+					/>
+				</Grid>
+			</Grid>
+			<Grid container spacing={2} justifyContent="center" sx={{ marginTop: '16px' }}>
+				<Grid item>
+					<Button
+						onClick={editing ? handleEditWorkout : handleAddWorkout}
+						variant="contained"
+						color="primary"
+					>
+						{editing ? 'Edit' : 'Add'}
+					</Button>
+				</Grid>
+			</Grid>
+			<div>
+				{myWorkout.map((workout) => (
+					<MyWorkouts
+						type={workout.type}
+						date={workout.date}
+						duration={workout.duration}
+						key={workout._id}
+						updatingInInput={() =>
+							updatingInInput(workout._id, workout.type, workout.date, workout.duration)
+						}
+						deleteWorkout={() => handleDeleteWorkout(workout._id)}
+					/>
+				))}
+			</div>
+
+			<Grid container spacing={2} justifyContent="center" sx={{ marginTop: '16px' }}>
+				<Grid item>
+					<Button onClick={handleLogout} variant="contained" color="primary">
+						Выйти
+					</Button>
+				</Grid>
+			</Grid>
 		</div>
 	);
 }

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { TextField, Button, Typography, Grid } from '@mui/material';
 import axios from 'axios';
 
 function Auth() {
@@ -33,30 +34,63 @@ function Auth() {
 	};
 
 	return (
-		<div>
-			<h1>{isRegistration ? 'Registration' : 'Login'}</h1>
-			<form onSubmit={handleSubmit}>
-				<input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-				<input
-					type="password"
-					placeholder="Password"
-					value={password}
-					onChange={(e) => setPassword(e.target.value)}
-				/>
-				<button type="submit">{isRegistration ? 'Register' : 'Login'}</button>
-			</form>
-			<p>
-				{isRegistration ? (
-					<>
-						Already have an account? <Link onClick={() => setIsRegistration(false)}>Login</Link>
-					</>
-				) : (
-					<>
-						Don't have an account? <Link onClick={() => setIsRegistration(true)}>Register</Link>
-					</>
+		<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+			<Grid container spacing={2} direction="column" alignItems="center">
+				<Grid item>
+					<Typography variant="h1">{isRegistration ? 'Registration' : 'Login'}</Typography>
+				</Grid>
+				<Grid item xs={12}>
+					<form onSubmit={handleSubmit}>
+						<Grid container spacing={2} direction="column" alignItems="center">
+							<Grid item xs={12}>
+								<TextField
+									type="email"
+									label="Email"
+									value={email}
+									onChange={(e) => setEmail(e.target.value)}
+									variant="outlined"
+									fullWidth
+									margin="normal"
+								/>
+							</Grid>
+							<Grid item xs={12}>
+								<TextField
+									type="password"
+									label="Password"
+									value={password}
+									onChange={(e) => setPassword(e.target.value)}
+									variant="outlined"
+									fullWidth
+									margin="normal"
+								/>
+							</Grid>
+							<Grid item xs={12}>
+								<Button type="submit" variant="contained" color="primary" fullWidth>
+									{isRegistration ? 'Register' : 'Login'}
+								</Button>
+							</Grid>
+						</Grid>
+					</form>
+				</Grid>
+				<Grid item xs={12}>
+					<Typography variant="body1">
+						{isRegistration ? (
+							<>
+								Already have an account? <Link onClick={() => setIsRegistration(false)}>Login</Link>
+							</>
+						) : (
+							<>
+								Don't have an account? <Link onClick={() => setIsRegistration(true)}>Register</Link>
+							</>
+						)}
+					</Typography>
+				</Grid>
+				{isRegistrationSuccessful && (
+					<Grid item xs={12}>
+						<Typography variant="body1">Registration successful!</Typography>
+					</Grid>
 				)}
-			</p>
-			{isRegistrationSuccessful && <p>Registration successful!</p>}
+			</Grid>
 		</div>
 	);
 }

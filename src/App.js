@@ -3,6 +3,8 @@ import { Routes, Route } from 'react-router-dom';
 import Auth from './components/Auth';
 import Workouts from './components/Workouts';
 
+
+
 function App() {
 	return (
 		<Routes>
