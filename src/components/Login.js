@@ -3,25 +3,22 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 function Login() {
-	const [username, setUsername] = useState('');
+	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const navigate = useNavigate();
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
-			// Отправляем данные аутентификации на сервер
 			const response = await axios.post('http://localhost:8000/auth/login', {
-				username,
+				email,
 				password,
 			});
 
-			console.log(response.data); // Распечатываем ответ от сервера
+			console.log(response.data);
 
-			// Сохраняем токен аутентификации в localStorage
 			localStorage.setItem('token', response.data.token);
 
-			// Аутентификация успешна, перенаправляем на страницу тренировок
 			navigate('/workouts');
 		} catch (error) {
 			console.error('Error during login:', error);
@@ -32,12 +29,7 @@ function Login() {
 		<div>
 			<h1>Login</h1>
 			<form onSubmit={handleSubmit}>
-				<input
-					type="text"
-					placeholder="Username"
-					value={username}
-					onChange={(e) => setUsername(e.target.value)}
-				/>
+				<input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
 				<input
 					type="password"
 					placeholder="Password"

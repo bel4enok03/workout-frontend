@@ -3,22 +3,23 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 function Registration() {
-	const [username, setUsername] = useState('');
+	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
+	const [isRegistrationSuccessful, setIsRegistrationSuccessful] = useState(false);
 	const navigate = useNavigate();
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
-			// Отправляем данные регистрации на сервер
 			const response = await axios.post('http://localhost:8000/auth/register', {
-				username,
+				email,
 				password,
 			});
 
-			console.log(response.data); // Распечатываем ответ от сервера
+			console.log(response.data);
 
-			// Регистрация успешна, перенаправляем на страницу входа
+			setIsRegistrationSuccessful(true);
+
 			navigate('/login');
 		} catch (error) {
 			console.error('Error during registration:', error);
@@ -29,12 +30,7 @@ function Registration() {
 		<div>
 			<h1>Registration</h1>
 			<form onSubmit={handleSubmit}>
-				<input
-					type="text"
-					placeholder="Username"
-					value={username}
-					onChange={(e) => setUsername(e.target.value)}
-				/>
+				<input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
 				<input
 					type="password"
 					placeholder="Password"
@@ -46,6 +42,7 @@ function Registration() {
 			<p>
 				Already have an account? <Link to="/login">Login</Link>
 			</p>
+			{isRegistrationSuccessful && <p>Registration successful!</p>}
 		</div>
 	);
 }
