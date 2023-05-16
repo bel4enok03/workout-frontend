@@ -6,23 +6,48 @@ import axios from 'axios';
 function Auth() {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
+	const [emailError, setEmailError] = useState('');
+	const [passwordError, setPasswordError] = useState('');
 	const [isRegistration, setIsRegistration] = useState(false);
 	const [isRegistrationSuccessful, setIsRegistrationSuccessful] = useState(false);
 	const [error, setError] = useState('');
 	const navigate = useNavigate();
 
-    const appDescription = "Welcome to Your Fitness App! This app helps you track and manage your workouts. Login or register to get started.";
+	const appDescription =
+		'Welcome to Your Fitness App! This app helps you track and manage your workouts. Login or register to get started.';
+
+	const validateForm = () => {
+		let isValid = true;
+
+		if (email.trim() === '') {
+			setEmailError('Email is required');
+			isValid = false;
+		} else {
+			setEmailError('');
+		}
+
+		if (password.trim() === '') {
+			setPasswordError('Password is required');
+			isValid = false;
+		} else {
+			setPasswordError('');
+		}
+
+		return isValid;
+	};
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+
+		if (!validateForm()) {
+			return;
+		}
 		try {
 			const endpoint = isRegistration ? '/auth/register' : '/auth/login';
 			const response = await axios.post(`https://workout-backend-tyan.onrender.com${endpoint}`, {
 				email,
 				password,
 			});
-
-			console.log(response.data);
 
 			if (!isRegistration) {
 				localStorage.setItem('token', response.data.token);
@@ -43,7 +68,7 @@ function Auth() {
 				<Grid item>
 					<Typography variant="h2">{isRegistration ? 'Registration' : 'Login'}</Typography>
 				</Grid>
-                <Grid item xs={12}>
+				<Grid item xs={12}>
 					<Typography variant="body1">{appDescription}</Typography>
 				</Grid>
 				<Grid item xs={12}>
@@ -58,6 +83,8 @@ function Auth() {
 									variant="outlined"
 									fullWidth
 									margin="normal"
+									error={!!emailError}
+									helperText={emailError}
 								/>
 							</Grid>
 							<Grid item xs={12}>
@@ -69,6 +96,8 @@ function Auth() {
 									variant="outlined"
 									fullWidth
 									margin="normal"
+									error={!!passwordError}
+									helperText={passwordError}
 								/>
 							</Grid>
 							<Grid item xs={12}>
