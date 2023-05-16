@@ -41,7 +41,7 @@ function Auth() {
 		<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
 			<Grid container spacing={2} direction="column" alignItems="center">
 				<Grid item>
-					<Typography variant="h1">{isRegistration ? 'Registration' : 'Login'}</Typography>
+					<Typography variant="h2">{isRegistration ? 'Registration' : 'Login'}</Typography>
 				</Grid>
                 <Grid item xs={12}>
 					<Typography variant="body1">{appDescription}</Typography>

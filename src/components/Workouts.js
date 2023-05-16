@@ -76,7 +76,7 @@ function Workouts() {
 
 	return (
 		<div>
-			<Typography variant="h1" sx={{ textAlign: 'center' }}>
+			<Typography variant="h2" sx={{ textAlign: 'center' }}>
 				Workout plan
 			</Typography>
 			<div style={{ display: 'flex', justifyContent: 'center', marginTop: '16px' }}>
