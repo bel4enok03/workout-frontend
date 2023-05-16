@@ -8,7 +8,10 @@ function Auth() {
 	const [password, setPassword] = useState('');
 	const [isRegistration, setIsRegistration] = useState(false);
 	const [isRegistrationSuccessful, setIsRegistrationSuccessful] = useState(false);
+	const [error, setError] = useState('');
 	const navigate = useNavigate();
+
+    const appDescription = "Welcome to Your Fitness App! This app helps you track and manage your workouts. Login or register to get started.";
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -30,6 +33,7 @@ function Auth() {
 			}
 		} catch (error) {
 			console.error('Error during authentication:', error);
+			setError('Invalid email or password');
 		}
 	};
 
@@ -38,6 +42,9 @@ function Auth() {
 			<Grid container spacing={2} direction="column" alignItems="center">
 				<Grid item>
 					<Typography variant="h1">{isRegistration ? 'Registration' : 'Login'}</Typography>
+				</Grid>
+                <Grid item xs={12}>
+					<Typography variant="body1">{appDescription}</Typography>
 				</Grid>
 				<Grid item xs={12}>
 					<form onSubmit={handleSubmit}>
@@ -85,6 +92,13 @@ function Auth() {
 						)}
 					</Typography>
 				</Grid>
+				{error && (
+					<Grid item xs={12}>
+						<Typography variant="body1" color="error">
+							{error}
+						</Typography>
+					</Grid>
+				)}
 				{isRegistrationSuccessful && (
 					<Grid item xs={12}>
 						<Typography variant="body1">Registration successful!</Typography>

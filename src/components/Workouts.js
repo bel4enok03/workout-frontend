@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { TextField, Button, Typography, Grid } from '@mui/material';
 import { getAllWorkouts, addWorkout, editWorkout, deleteWorkout } from '../api/FetchWorkouts';
 import { MyWorkouts } from './MyWorkouts';
+import image from '../gifCat.gif';
 
 function Workouts() {
 	const [myWorkout, setMyWorkout] = useState([]);
@@ -78,6 +79,9 @@ function Workouts() {
 			<Typography variant="h1" sx={{ textAlign: 'center' }}>
 				Workout plan
 			</Typography>
+			<div style={{ display: 'flex', justifyContent: 'center', marginTop: '16px' }}>
+				<img src={image} alt="Workout" style={{ maxWidth: '100px', height: 'auto' }} />
+			</div>
 			<Grid container spacing={2} alignItems="center" justifyContent="center" sx={{ marginTop: '16px' }}>
 				<Grid item xs={12} sm={4}>
 					<TextField
@@ -93,7 +97,6 @@ function Workouts() {
 				<Grid item xs={12} sm={4}>
 					<TextField
 						type="date"
-						label="Date"
 						value={date || ''}
 						onChange={(e) => setDate(e.target.value)}
 						variant="outlined"
@@ -140,7 +143,7 @@ function Workouts() {
 			<Grid container spacing={2} justifyContent="center" sx={{ marginTop: '16px' }}>
 				<Grid item>
 					<Button onClick={handleLogout} variant="contained" color="primary">
-						Выйти
+					Log out
 					</Button>
 				</Grid>
 			</Grid>
