@@ -1,0 +1,16 @@
+{
+	"name": "Your React App",
+	"short_name": "React App",
+	"description": "A description of your React application",
+	"start_url": "/",
+	"display": "standalone",
+	"theme_color": "#ffffff",
+	"background_color": "#ffffff",
+	"icons": [
+		{
+			"src": "../gifCat.gif",
+			"sizes": "100x100",
+			"type": "image/gif"
+		}
+	]
+}

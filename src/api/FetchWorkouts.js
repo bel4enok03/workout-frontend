@@ -3,7 +3,7 @@ import axios from 'axios';
 const getAllWorkouts = async () => {
 	try {
 		const token = localStorage.getItem('token');
-		const response = await axios.get('https://workout-backend-alkx.onrender.com/workouts', {
+		const response = await axios.get('http://193.201.90.41:8000/workouts', {
 			headers: { Authorization: `Bearer ${token}` },
 		});
 		return response.data;
@@ -16,7 +16,7 @@ const addWorkout = async (type, date, duration) => {
 	try {
 		const token = localStorage.getItem('token');
 		await axios.post(
-			'https://workout-backend-alkx.onrender.com/workouts/saveWorkout',
+			'http://193.201.90.41:8000//workouts/saveWorkout',
 			{ type, date, duration },
 			{ headers: { Authorization: `Bearer ${token}` } }
 		);
@@ -29,7 +29,7 @@ const editWorkout = async (workoutId, type, date, duration, setWorkout) => {
 	try {
 		const token = localStorage.getItem('token');
 		await axios.post(
-			'hhttps://workout-backend-alkx.onrender.com/workouts/editWorkout',
+			'http://193.201.90.41:8000//workouts/editWorkout',
 			{ type, date, duration, _id: workoutId },
 			{ headers: { Authorization: `Bearer ${token}` } }
 		);
@@ -42,7 +42,7 @@ const editWorkout = async (workoutId, type, date, duration, setWorkout) => {
 const deleteWorkout = async (workoutId) => {
 	try {
 		const token = localStorage.getItem('token');
-		await axios.delete('https://workout-backend-alkx.onrender.com/workouts/deleteWorkout', {
+		await axios.delete('http://193.201.90.41:8000//workouts/deleteWorkout', {
 			headers: { Authorization: `Bearer ${token}` },
 			data: { _id: workoutId },
 		});
