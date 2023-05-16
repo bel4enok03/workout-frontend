@@ -3,7 +3,7 @@ import axios from 'axios';
 const getAllWorkouts = async () => {
 	try {
 		const token = localStorage.getItem('token');
-		const response = await axios.get('https://workout-backend-xrs2.onrender.com/workouts', {
+		const response = await axios.get('https://workout-backend-alkx.onrender.com/workouts', {
 			headers: { Authorization: `Bearer ${token}` },
 		});
 		return response.data;
@@ -16,7 +16,7 @@ const addWorkout = async (type, date, duration) => {
 	try {
 		const token = localStorage.getItem('token');
 		await axios.post(
-			'https://workout-backend-xrs2.onrender.comworkouts/saveWorkout',
+			'https://workout-backend-alkx.onrender.com/workouts/saveWorkout',
 			{ type, date, duration },
 			{ headers: { Authorization: `Bearer ${token}` } }
 		);
@@ -29,7 +29,7 @@ const editWorkout = async (workoutId, type, date, duration, setWorkout) => {
 	try {
 		const token = localStorage.getItem('token');
 		await axios.post(
-			'https://workout-backend-xrs2.onrender.com/workouts/editWorkout',
+			'hhttps://workout-backend-alkx.onrender.com/workouts/editWorkout',
 			{ type, date, duration, _id: workoutId },
 			{ headers: { Authorization: `Bearer ${token}` } }
 		);
@@ -42,7 +42,7 @@ const editWorkout = async (workoutId, type, date, duration, setWorkout) => {
 const deleteWorkout = async (workoutId) => {
 	try {
 		const token = localStorage.getItem('token');
-		await axios.delete('https://workout-backend-xrs2.onrender.com/workouts/deleteWorkout', {
+		await axios.delete('https://workout-backend-alkx.onrender.com/workouts/deleteWorkout', {
 			headers: { Authorization: `Bearer ${token}` },
 			data: { _id: workoutId },
 		});

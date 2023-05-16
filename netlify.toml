@@ -1,4 +1,4 @@
 [[redirects]]
   from = "/api/*"
-  to = "https://workout-backend-tyan.onrender.com/:splat"
+  to = "https://workout-backend-alkx.onrender.com/:splat"
   headers = { Access-Control-Allow-Origin = "https://workouts-plan.netlify.app" }
