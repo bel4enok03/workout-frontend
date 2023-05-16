@@ -17,7 +17,7 @@ function Auth() {
 		e.preventDefault();
 		try {
 			const endpoint = isRegistration ? '/auth/register' : '/auth/login';
-			const response = await axios.post(`https://workout-backend-c6o4.onrender.com${endpoint}`, {
+			const response = await axios.post(`https://workout-backend-prq6.onrender.com${endpoint}`, {
 				email,
 				password,
 			});
