@@ -17,7 +17,7 @@ function Auth() {
 		e.preventDefault();
 		try {
 			const endpoint = isRegistration ? '/auth/register' : '/auth/login';
-			const response = await axios.post(`https://workout.tatyana-chuvakova.ru${endpoint}`, {
+			const response = await axios.post(`http://212.233.93.90:8000${endpoint}`, {
 				email,
 				password,
 			});
